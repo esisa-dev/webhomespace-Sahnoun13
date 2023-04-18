@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="Dashboard">
+    <div class="head">
+        <h1>User Dashboard</h1>
+        <a class="image-button" href="/logout">
+            <img src="{{ url_for('static', filename='logout.png') }}" alt="logout">
+        </a>
+    </div>
+    
+    <div>
+        <button class="button" id="files-button"><a href="/files">Files</a></button>
+        <button class="button" id="dirs-button"><a href="/dirs">Dirs</a></button>
+        <button class="button" id="space-button"><a href="/space">Space</a></button>
+    </div>
+
+    <form action="{{ url_for('search') }}" method="GET">
+        <div>
+            <input type="text" id="search-bar" name="query" placeholder="Search...">
+            <button class="image-button-search" type="submit" id="search-button">
+                <img src="{{ url_for('static', filename='search.png') }}" alt="search">
+            </button>
+        </div>
+    </form>
+
+    <table id="files-table">
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Last Modified</th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td><a id="row-link" href="{{ url_for('navig', path=row.path) }}">{{ row.name }}</a></td>
+                <td>{{ row.time }}</td>
+                <td>{{ row.size }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="image-button-download" href="/download">
+        <img src="{{ url_for('static', filename='download.png') }}" alt="download">
+    </a>
+
+</body>
+
+</html>
